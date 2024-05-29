@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sayfa 2</title>
+
+    <style>
+        body {
+            height: 100vh; /* Ekran yüksekliği kadar alan kapla */
+            margin: 0; /* Sayfa kenar boşluklarını sıfırla */
+        }
+        header{
+        	background-color: black;
+        	display: flex;
+        	align-items:center;
+        	flex-direction: row;
+        	justify-content: space-between; /* Öğeleri aralarında boşluk bırakarak yatayda hizala */
+            padding: 30px; /* Kenar boşlukları ekleyelim */
+        }
+        header div{
+        	margin: 10px;
+        	display: flex;
+        }
+        header a{
+        	color: grey;
+        	margin: 0 10px;
+        	font: bolder;
+            text-decoration: none; /* Altçizgiyi kaldır */
+        }
+     	header a:hover {
+    		transform: scale(1.1);
+    		color:#ffbc07;
+		}
+		#headerBrand:hover {
+            transform: scale(1.1); /* Görüntüye mouse üstüne gelindiğinde boyutunu artır */
+        }
+    </style>
+
+</head>
+<body>
+    <header id="header">
+         <img id="headerBrand"onclick="redirectToPage('./MainPage.html')" src="./logobeyaz_edited.png">
+         <div>
+         	 <a id="1" href="./addPersonal.html">Add Personal</a>
+        	 <a id="2" href="./deletePersonal.html">Delete Personal</a>
+        	 <a id="3" href="./updatePersonal.html">Update Personal</a>
+        	 <a id="4" href="./viewAllPersonal.html">View All Personal</a>
+         </div>
+    </header>
+
+    <div id="sayfa1">
+        
+    </div>
+
+    <script>
+        function redirectToPage(pageUrl) {
+            window.location.href = pageUrl;
+        }
+    </script>
+</body>
+</html>

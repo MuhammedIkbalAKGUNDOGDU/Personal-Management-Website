@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update Employee</title>
+
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background-color: black;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 30px;
+        }
+        header div {
+            margin: 10px;
+            display: flex;
+        }
+        header a {
+            color: grey;
+            margin: 0 10px;
+            font: bolder;
+            text-decoration: none;
+        }
+        header a:hover {
+            transform: scale(1.1);
+            color: #ffbc07;
+        }
+        #headerBrand:hover {
+            transform: scale(1.1);
+        }
+        #a3 {
+            color: #ffbc07;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .textbox-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #ffbc07;
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+        }
+        label {
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 8px 20px;
+            background-color: #008000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0a5c0a;
+        }
+        #ID {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 120px;
+        }
+        .textbox-container:hover {
+            border-width: 3px;
+            border-color: #ffbc07;
+        }
+    </style>
+
+</head>
+<body>
+    <header id="header">
+         <img id="headerBrand" onclick="redirectToPage('./MainPage.html')" src="./logobeyaz_edited.png">
+         <div>
+             <a id="a1" href="./addPersonal.html">Add Personal</a>
+             <a id="a2" href="./deletePersonal.html">Delete Personal</a>
+             <a id="a3" href="./updatePersonal.html">Update Personal</a>
+             <a id="a4" href="./viewAllPersonal.html">View All Personal</a>
+         </div>
+    </header>
+
+    <div class="textbox-container">
+        <div id="ID">
+            <label for="id">ID:</label>
+            <input type="text" id="id">
+            <label for="phoneNumberInput">New or Old Phone Number:</label>
+            <input type="text" id="phoneNumberInput">
+            <label for="department">New or Old Department:</label>
+            <input type="text" id="department">
+        </div>
+        <div>
+            <button onclick="updateEmployee()">Update Employee</button>
+        </div>
+    </div>
+
+    <script>
+        function redirectToPage(pageUrl) {
+            window.location.href = pageUrl;
+        }
+
+        async function updateEmployee() {
+            const id = document.getElementById("id").value;
+            const phoneNumber = document.getElementById("phoneNumberInput").value;
+            const department = document.getElementById("department").value;
+
+            const employeeDTO = {
+                employeeId: id,
+                phoneNumber: phoneNumber,
+                department: department,
+            };
+
+            try {
+                const response = await fetch('http://localhost:8080/api/updateEmployee', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(employeeDTO),
+                });
+
+                const responseData = await response.json();
+
+                if (responseData.success) {
+                    alert(responseData.message);
+                } else {
+                    alert(responseData.message);
+                }
+            } catch (error) {
+                console.error('Error updating employee:', error);
+                alert('An error occurred while updating the employee.');
+            }
+        }
+    </script>
+</body>
+</html>

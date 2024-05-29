@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Employee</title>
+
+    <style>
+        body {
+            height: 100vh; /* Ekran yüksekliği kadar alan kapla */
+            margin: 0; /* Sayfa kenar boşluklarını sıfırla */
+        }
+        header{
+            background-color: black;
+            display: flex;
+            align-items:center;
+            flex-direction: row;
+            justify-content: space-between; /* Öğeleri aralarında boşluk bırakarak yatayda hizala */
+            padding: 30px; /* Kenar boşlukları ekleyelim */
+        }
+        header div{
+            margin: 10px;
+            display: flex;
+        }
+        header a{
+            color: grey;
+            margin: 0 10px;
+            font: bolder;
+            text-decoration: none; /* Altçizgiyi kaldır */
+        }
+        header a:hover {
+            transform: scale(1.1);
+            color:#ffbc07;
+        }
+        #headerBrand:hover {
+            transform: scale(1.1); /* Görüntüye mouse üstüne gelindiğinde boyutunu artır */
+        }
+        #a1 {
+            color:#ffbc07 ;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .textbox-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px ;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #ffbc07;
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.3s ease-in-out; /* Geçiş efekti */
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75); /* Gölge efekti */
+        }
+        label {
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 8px 20px;
+            background-color: #008000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0a5c0a;
+        }
+        #ID {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 120px;
+        }
+        .textbox-container:hover {
+            border-width: 3px;
+            border-color: #ffbc07;
+        }
+
+    </style>
+
+</head>
+<body>
+    <header id="header">
+         <img id="headerBrand"onclick="redirectToPage('./MainPage.html')" src="./logobeyaz_edited.png">
+         <div>
+             <a id="a1" href="./addPersonal.html">Add Personal</a>
+             <a id="a2" href="./deletePersonal.html">Delete Personal</a>
+             <a id="a3" href="./updatePersonal.html">Update Personal</a>
+             <a id="a4" href="./viewAllPersonal.html">View All Personal</a>
+         </div>
+    </header>
+
+       <div class="textbox-container">
+            <div id="ID">
+                <label for="nameInput">Name:</label>
+                <input type="text" id="nameInput">
+                <label for="surnameInput">Surname:</label>
+                <input type="text" id="surnameInput">
+                <label for="phoneNumberInput">Phone Number:</label>
+                <input type="text" id="phoneNumberInput">
+                <label for="departmentInput">Department:</label>
+                <input type="text" id="departmentInput">
+            </div>
+            <div>
+                 <button onclick="addEmployee()">Add Employee</button>
+            </div>
+        </div>
+
+    <script>
+        function redirectToPage(pageUrl) {
+            window.location.href = pageUrl;
+        }
+
+        async function addEmployee() {
+            const name = document.getElementById("nameInput").value;
+            const surname = document.getElementById("surnameInput").value;
+            const phoneNumber = document.getElementById("phoneNumberInput").value;
+            const department = document.getElementById("departmentInput").value;
+
+            const employeeData = {
+                name: name,
+                surname: surname,
+                phoneNumber: phoneNumber,
+                department: department,
+            };
+
+            try {
+                const response = await fetch('http://localhost:8080/api/saveEmployee', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(employeeData)
+                });
+
+                const responseData = await response.json();
+
+                if (responseData.success) {
+                    alert(responseData.message);
+                } else {
+                    alert(responseData.message);
+                }
+            } catch (error) {
+                console.error('Error adding employee:', error);
+                alert('An error occurred while adding the employee.');
+            }
+        }
+    </script>
+</body>
+</html>

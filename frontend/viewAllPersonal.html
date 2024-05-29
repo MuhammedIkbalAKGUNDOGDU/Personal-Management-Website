@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>View All Personal</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background-color: black;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 30px;
+        }
+        header div {
+            margin: 10px;
+            display: flex;
+        }
+        header a {
+            color: grey;
+            margin: 0 10px;
+            font: bolder;
+            text-decoration: none;
+        }
+        header a:hover {
+            transform: scale(1.1);
+            color: #ffbc07;
+        }
+        #headerBrand:hover {
+            transform: scale(1.1);
+        }
+        #a4 {
+            color: #ffbc07;
+        }
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <img id="headerBrand" onclick="redirectToPage('./MainPage.html')" src="./logobeyaz_edited.png">
+        <div>
+            <a id="a1" href="./addPersonal.html">Add Personal</a>
+            <a id="a2" href="./deletePersonal.html">Delete Personal</a>
+            <a id="a3" href="./updatePersonal.html">Update Personal</a>
+            <a id="a4" href="./viewAllPersonal.html">View All Personal</a>
+        </div>
+    </header>
+
+    <div class="content">
+        <table id="employeeTable">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Department</th>
+                    <th>Phone Number</th>
+                    <th>Password</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JavaScript will populate this section -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function redirectToPage(url) {
+            window.location.href = url;
+        }
+
+        async function populateTable() {
+            try {
+                const response = await fetch('http://localhost:8080/api/allEmployees');
+                const responseData = await response.json();
+
+                if (responseData.isSuccess) {
+                    const employees = responseData.data;
+                    const tableBody = document.getElementById('employeeTable').querySelector('tbody');
+                    employees.forEach(employee => {
+                        const row = document.createElement('tr');
+                        Object.values(employee).forEach(value => {
+                            const cell = document.createElement('td');
+                            cell.textContent = value;
+                            row.appendChild(cell);
+                        });
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    console.error(responseData.message);
+                }
+            } catch (error) {
+                console.error('Error fetching employees:', error);
+            }
+        }
+
+        // Call populateTable function to fetch and display data
+        populateTable();
+    </script>
+</body>
+</html>

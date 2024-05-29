@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Giriş Sayfası</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh; /* Ekran yüksekliği kadar alan kapla */
+            margin: 0; /* Sayfa kenar boşluklarını sıfırla */
+        }
+        #login {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40vh;
+            height: 40vh;
+            border-radius: 10px;
+            border-style: solid; /* Border stilini belirt */
+            border-width: 1px; /* Border kalınlığını belirt */
+            border-color: black; /* Border rengini belirt */
+            background-color: #ffbc07;
+        }
+        #login div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px; /* Input kutuları arasına boşluk eklemek için */
+        }
+        #login label {
+            width: 8vh; /* Label'ın genişliği */
+            text-align: right; /* Label içeriğini sağa hizala */
+            margin-right: 10px; /* Label ile input kutusu arasına boşluk eklemek için */
+        }
+        #login input {
+            width: 20vh; /* Input kutusu genişliği */
+        }
+    </style>
+
+</head>
+<body>
+	 <img src="./logobeyaz_edited.png">
+    <div id="login">
+        <!-- Sayfa 1 içeriği -->
+
+        <div>
+            <label for="username">Kullanıcı Adı:</label>
+            <input type="text" id="username">
+        </div>
+        <div>
+            <label for="password">Şifre:</label>
+            <input type="password" id="password">
+        </div>
+        <button onclick="checkCredentials()">Giriş Yap</button>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        function checkCredentials() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Kullanıcı adı ve şifre doğrulama
+            if ((username === "admin1" && password === "admin1") ||
+                (username === "admin2" && password === "admin2") ||
+                (username === "admin3" && password === "admin3") ||
+                (username === "admin4" && password === "admin4") ||
+                (username === "admin5" && password === "admin5")) {
+                // Doğruysa diğer sayfaya yönlendir
+                window.location.href = "./MainPage.html";
+            } else {
+                // Yanlışsa mesajı göster
+                document.getElementById("message").innerHTML = "Kullanıcı adı veya şifre yanlış!";
+            }
+        }
+    </script>
+</body>
+</html>
